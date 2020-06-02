@@ -5,17 +5,13 @@ import Section from '../Section/Section';
 import Notification from '../Notification/Notification';
 
 export default class Feedback extends Component {
-  static defaultProps = {};
-
-  static propTypes = {};
-
   state = {
     good: 0,
     neutral: 0,
     bad: 0,
   };
 
-  handleChange = option => {
+  handleIncrement = option => {
     this.setState(state => ({
       [option]: state[option] + 1,
     }));
@@ -30,7 +26,7 @@ export default class Feedback extends Component {
     const positiveFeedbackPercentage =
       (this.state.good * 100) /
       (this.state.good + this.state.neutral + this.state.bad);
-    return Number(positiveFeedbackPercentage);
+    return positiveFeedbackPercentage.toFixed(2);
   };
 
   render() {
@@ -39,7 +35,7 @@ export default class Feedback extends Component {
         <Section title="Please leave feedback">
           <FeedbackOptions
             options={this.state}
-            onLeaveFeedback={this.handleChange}
+            onLeaveFeedback={this.handleIncrement}
           />
         </Section>
         {this.countTotalFeedback() > 0 ? (
